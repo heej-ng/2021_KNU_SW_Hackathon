@@ -1,0 +1,23 @@
+{
+  "name": "2021_KNU_SW_Hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heej-ng/2021_KNU_SW_Hackathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heej-ng/2021_KNU_SW_Hackathon/issues"
+  },
+  "homepage": "https://github.com/heej-ng/2021_KNU_SW_Hackathon#readme",
+  "dependencies": {
+    "bip39": "^3.0.4"
+  }
+}
