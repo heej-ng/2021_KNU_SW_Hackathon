@@ -1,0 +1,244 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus</title>
+    <style>
+        * {padding : 0; margin: 0;}
+        canvas {background: #eee; display: block; margin : 0 auto;}
+    </style>
+    
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+   <div style = "text-align: center;">
+    <font size = "8em" color = "red" font-weight = "bold">
+        <b>Smart Campus</b>
+    </font>
+  </div>
+    <h1 style = "text-align: center;">IT5</h1>
+    <canvas id = "myCanvas" width ="1024" height = "768"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var radius = 20
+        var playerSpeed = 4
+
+        var rightPressed = false;
+        var leftPressed = false;
+        var upPressed = false;
+        var downPressed = false;
+        function PlayerBall(id){
+            this.id = id;
+            this.color = "#FF00FF";
+            this.x = 1024/2;
+            this.y = 768/2;
+        }
+        
+        var balls  = [];
+        var ballMap = {};
+        var myId;
+
+        document.addEventListener("keydown", keyDownHandler,false);
+        document.addEventListener("keyup", keyUpHandler,false);
+
+        function keyDownHandler(e){
+            if (e.code == 'ArrowRight'){
+                rightPressed = true;
+            }
+            if (e.code == 'ArrowLeft'){
+                leftPressed = true;
+            }
+            if(e.code == "ArrowDown"){
+                downPressed = true;
+            }
+            if(e.code == "ArrowUp"){
+                upPressed = true;
+            }
+        }
+
+        function keyUpHandler(e){
+            if (e.code == "ArrowRight"){
+                rightPressed = false;
+            }
+            if (e.code == "ArrowLeft"){
+                leftPressed = false;
+            }
+            if(e.code == "ArrowDown"){
+                downPressed = false;
+            }
+            if(e.code == "ArrowUp"){
+                upPressed = false;
+            }
+        }
+
+        function joinUser(id,color,x,y){
+            let ball = new PlayerBall(id);
+            ball.color = color;
+            ball.x = x;
+            ball.y = y;
+
+            balls.push(ball);
+            ballMap[id] = ball;
+
+            return ball;
+        }
+
+        function leaveUser(id){
+            for(var i = 0 ; i < balls.length; i++){
+                if(balls[i].id == id){
+                    balls.splice(i,1);
+                    break;
+                }
+            }
+            delete ballMap[id];
+        }
+
+        function updateState(id,x,y){
+            let ball = ballMap[id];
+            if(!ball){
+                return;
+            }
+            ball.x = x;
+            ball.y = y;
+
+        }
+        function sendData() {
+            let curPlayer = ballMap[myId];
+            let data = {};
+            data = {
+                id : curPlayer.id,
+                x: curPlayer.x,
+                y: curPlayer.y,
+            };
+            if(data){
+                socket.emit("send_location", data);
+            }
+        }
+        // function lectureroomDetection(){
+        //     let ball = ballMap[myId]
+        //     for(var i = 0 ;i<lecturerooms.length;i++){
+        //         if(Math.sqrt((ball.x-lecturerooms[i].startingX)**2+(ball.y-lecturerooms[i].staringY)**2) <=lectureradius+radius){
+        //             ball.state = 0;
+        //             socket.emit('lectureroom_detect',{id:myId});
+        //             break;
+        //         }
+        //     }
+        // }
+
+        var socket = io();
+
+        socket.on('user_id', function(data){
+            myId = data;
+        });
+        socket.on('join_user', function(data){
+            joinUser(data.id, data.color, data.x, data.y);
+        })
+        socket.on('leave_user', function(data){
+            leaveUser(data);
+        })
+        socket.on('update_state', function(data){
+            updateState(data.id, data.x, data.y);
+        })
+
+        socket.on('enterlectureroom',function(data){
+            for(var i = 0 ;i<lectures.length;i++){
+                if(balls[i].id ==data.id){
+                    balls[i].state = 0;
+                    break;
+                }
+            }
+        })
+        // var lecturerooms = [];
+        // var lectureroomsRadius = 20;
+
+        // function Lecture(id){
+        //     this.id = id;
+        //     this.color = "#000000";
+        //     this.startingX = 1024/2;
+        //     this.startingY = 768/2;
+        // }
+        
+        // socket.on('lecture_generator',function(data){
+        //     let lecture = new Lecture()
+        //     lecture.startingX = data.startingX;
+        //     lecture.startingY = data.startingY;
+        //     lectures.push(lecture);
+        // })
+      
+
+        function renderPlayer() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+                for (let i = 0; i < balls.length; i++) {
+                    let ball = balls[i];
+                    
+                    ctx.fillStyle = ball.color;
+                    ctx.beginPath();
+                    ctx.arc(ball.x, ball.y, radius, 0, Math.PI * 2, false);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.font = '15px Arial';
+                    ctx.fillText(`player ${i}`,ball.x-radius-7, ball.y-radius);
+                    ctx.closePath();
+                }
+                // for(let j = 0 ;j<lectures.length;j++){
+                //     let lecture = lectures[j];
+                //     ctx.fillStyle = lecture.color;
+                //     ctx.beginPath();
+                //     cts.arc(lecture.startingX,enemy.staringY,enemyRadius,0,Math.PI*2,false);
+                //     ctx.closePath();
+                //     ctx.fill();
+                // }
+
+                // let lecture = lectures[0];
+
+                let curPlayer = ballMap[myId];
+                
+                if (rightPressed){
+                    curPlayer.x += playerSpeed;
+                }
+                if (leftPressed ){
+                    curPlayer.x -= playerSpeed;
+                }
+                if(upPressed ){
+                    curPlayer.y -= playerSpeed;
+                }
+                if(downPressed ){
+                    curPlayer.y += playerSpeed;
+                }
+                sendData();
+            }
+
+        function update() {
+            renderPlayer();
+        }
+        
+        setInterval(update, 10);
+
+
+        
+
+    </script>
+    <script>
+        let browserPoint = (event)=>{
+            console.log(`브라우저 좌표 : (${event.pageX}, ${event.pageY})`);
+        }
+        let clientPoint = (event) =>{
+            console.log(`화면 좌표 : (${event.clientX}, ${event.clientY})`);
+        }
+        window.addEventListener('click',e=>{
+            browserPoint(e);
+            clientPoint(e);
+        });
+
+    </script>
+
+</body>
+</html>
