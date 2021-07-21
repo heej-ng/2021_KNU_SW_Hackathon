@@ -1,6 +1,5 @@
 # 2021 KNU SW Hackathon
-<br>
-<br>
+
 ## KNU 메타버스
 
 ### 1. 아이디어 설명 :bulb:
