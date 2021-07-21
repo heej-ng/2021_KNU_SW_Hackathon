@@ -1,0 +1,114 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>Smart Campus</title>
+    <style>
+        * {
+            padding : 0; 
+            margin: 0;
+        }
+        canvas {
+            background: #eee; 
+            display: block; 
+            margin : 0 auto;
+        }
+    </style>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script language="javascript" type="text/javascript" src="/views/object/roomObject.js"></script>
+    <script language="javascript" type="text/javascript" src="/views/object/userObject.js"></script>
+    <script language="javascript" type="text/javascript" src="/views/object/rooms.js"></script>
+    <script language="javascript" type="text/javascript" src="/views/socket/render.js"></script>
+    <script language="javascript" type="text/javascript" src="/views/socket/socket.js"></script>
+</head>
+<body>
+   <div style = "text-align: center;">
+    <font size = "8em" color = "red" font-weight = "bold">
+        <b>Smart Campus</b>
+    </font>
+  </div>
+    <h1 style = "text-align: center;">IT5</h1>
+    <canvas id = "myCanvas" width ="1024" height = "768"></canvas>
+  
+    <script>
+        var map = '/views/img/map.png';
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var radius = 20
+        var playerSpeed = 4
+
+        var rightPressed = false;
+        var leftPressed = false;
+        var upPressed = false;
+        var downPressed = false;
+    
+        var balls  = [];
+        var ballMap = {};
+        var myId;
+
+        document.addEventListener("keydown", keyDownHandler,false);
+        document.addEventListener("keyup", keyUpHandler,false);
+
+        function keyDownHandler(e){
+            if (e.code == 'ArrowRight'){
+                rightPressed = true;
+            }
+            if (e.code == 'ArrowLeft'){
+                leftPressed = true;
+            }
+            if(e.code == "ArrowDown"){
+                downPressed = true;
+            }
+            if(e.code == "ArrowUp"){
+                upPressed = true;
+            }
+        }
+
+        function keyUpHandler(e){
+            if (e.code == "ArrowRight"){
+                rightPressed = false;
+            }
+            if (e.code == "ArrowLeft"){
+                leftPressed = false;
+            }
+            if(e.code == "ArrowDown"){
+                downPressed = false;
+            }
+            if(e.code == "ArrowUp"){
+                upPressed = false;
+            }
+        }
+        
+        function update() {
+            renderMap();
+            roomDetection();
+            renderPlayer();
+        }
+        
+        setInterval(update, 10);
+        
+
+    </script>
+    <script>
+        let browserPoint = (event)=>{
+            console.log(`브라우저 좌표 : (${event.pageX}, ${event.pageY})`);
+        }
+        let clientPoint = (event) =>{
+            console.log(`화면 좌표 : (${event.clientX}, ${event.clientY})`);
+        }
+        window.addEventListener('click',e=>{
+            browserPoint(e);
+            clientPoint(e);
+        });
+
+    </script>
+    
+
+</body>
+</html>
