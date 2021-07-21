@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IT융복합관 컴퓨터학부 사무실</title>
+    <style>
+      body{
+        background-image: url("img/New Piskel-4.png");
+        background-repeat: no-repeat;
+
+      }
+      #addr{
+          font-size:15px; padding: 10px 10px;
+          position: absolute;
+          left: 160px;
+          top: 240px;
+
+      }
+      #phone{
+          font-size:15px; padding: 10px 10px;
+          position: absolute;
+          left: 435px;
+          top: 240px;
+
+      }
+      #fax{
+          font-size:15px; padding: 10px 10px;
+          position: absolute;
+          left: 720px;
+          top: 240px;
+
+      }
+      .indent{
+        text-indent:60px;
+      }
+      .button{
+          border-radius:20px;
+          transition-duration:0.4s
+      }
+      .button:hover{
+          background: tomato;
+          color:white;
+      }
+    </style>
+  <script>
+    function address(){
+      alert("대구광역시 북구 대학로 80, IT대학 융복합관 317호")
+    }
+    function phone_number(){
+      alert("컴퓨터학부 사무실 대표전화 : 053-950-5550/6370")
+    }
+    function fax_number(){
+      alert("팩스번호 : 053-957-4846")
+    }
+  </script>
+</head>
+<body>
+  <h2 class="indent">[317] IT융복합관 컴퓨터학부 사무실 </h2>
+  <div>
+      <button class="button" type="button" id="addr" onclick="address()">
+          학부사무실 주소
+          </button>
+      <button class="button" type="button" id="phone" onclick="phone_number()">
+          학부사무실 대표전화
+          </button>
+      <button class="button" type="button" id="fax" onclick="fax_number()">
+          학부사무실 팩스번호
+          </button>
+  </div>
+</body>
+</html>
