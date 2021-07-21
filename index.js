@@ -1,24 +1,16 @@
-const express = require("express");
-const app = express();
-const port = 9000;
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-const { User } = require("./models/User");
-const { auth } = require("./middleware/auth");
-const cors = require("cors");
+const express = require('express');
+const expressSession = require('express-session')
 
-app.use(
-  cors({
-    origin: true,
-    credentials: true, //도메인이 다른경우 서로 쿠키등을 주고받을때 허용해준다고 한다
-  })
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+const app = new express()
+const ejs = require('ejs')
 
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+
+const mongoose = require('mongoose');
 const dbAddress = "mongodb+srv://whghtjd320:jhs2430570@cluster0.ylrcp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
 mongoose
   .connect(dbAddress, {
     useNewUrlParser: true,
@@ -29,78 +21,73 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-  app.get("/", (req, res) => res.send("Hello world!!!!"));
+const bcrypt = require('bcrypt')
+const User = require('./models/User')
 
-app.post("/register", (req, res) => {
-    //회원가입을 할때 필요한것
-    //post로 넘어온 데이터를 받아서 DB에 저장해준다
-    const user = new User(req.body);
-    user.save((err, userInfo) => {
-      if (err) return res.json({ success: false, err });
-      return res.status(200).json({ success: true });
-    });
-});
+const mainController = require('./controllers/main')
 
-app.post("/login", (req, res) => {
-    //로그인을할때 아이디와 비밀번호를 받는다
-    User.findOne({ name: req.body.name }, (err, user) => {
-      if (err) {
-        return res.json({
-          loginSuccess: false,
-          message: "존재하지 않는 아이디입니다.",
-        });
+const logoutController = require('./controllers/logout')
+const loginController = require('./controllers/login')
+const loginUserController = require('./controllers/loginUser')
+const storeUserController = require('./controllers/storeUser')
+const newUserController = require('./controllers/newUser')
+
+const redirectIfNotAuthMiddleware = require('./middleware/redirectIfNotAuthMiddleware')
+const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticatedMiddleware')
+const validateMiddleWare = require('./middleware/validationMiddleware')
+const authMiddleware = require('./middleware/authMiddleware')
+
+app.use(expressSession({
+  resave: true,
+  saveUninitialized: true,
+  secret:'keyboard cat'
+}))
+
+let port = process.env.PORT
+if (port == null || port == "") {
+  port = 9000
+}
+
+app.listen(port, ()=>{
+  console.log('App listening ...')
+})
+
+app.use("*", (req, res, next)=>{
+  loggedIn = req.session.userId;
+  next()
+})
+
+// 로그인, 회원가입
+app.get('/auth/logout', redirectIfNotAuthMiddleware, logoutController)
+app.get('/auth/register', redirectIfAuthenticatedMiddleware, newUserController)
+app.get('/auth/login', redirectIfAuthenticatedMiddleware, loginController)
+app.post('/users/register', redirectIfAuthenticatedMiddleware, storeUserController)
+app.post("/users/login", (req, res) => {
+  const {name, password} = req.body
+  console.log(req.body)
+  User.findOne({name:name}, (error, user) =>{
+      if(user){
+          bcrypt.compare(password, user.password, (error, same)=>{
+              if(same){
+                  req.session.userId = user._id
+                  req.session.userName = user.name
+                  if(!req.session.returnTo) res.redirect('/')
+                  else res.redirect(req.session.returnTo)
+              }
+              else{
+                  res.redirect('/auth/login')
+              }
+          })
       }
-      user
-        .comparePassword(req.body.password)
-        .then((isMatch) => {
-          if (!isMatch) {
-            return res.json({
-              loginSuccess: false,
-              message: "비밀번호가 일치하지 않습니다",
-            });
-          }
-      //비밀번호가 일치하면 토큰을 생성한다
-      //jwt 토큰 생성하는 메소드 작성
-          user
-            .generateToken()
-            .then((user) => {
-              res
-                .cookie("x_auth", user.token)
-                .status(200)
-                .json({ loginSuccess: true, userId: user._id });
-            })
-            .catch((err) => {
-              res.status(400).send(err);
-            });
-        })
-        .catch((err) => res.json({ loginSuccess: false, err }));
-    });
-}); 
-
-//auth 미들웨어를 가져온다
-//auth 미들웨어에서 필요한것 : Token을 찾아서 검증하기
-app.get("/auth", auth, (req, res) => {
-    //auth 미들웨어를 통과한 상태 이므로
-    //req.user에 user값을 넣어줬으므로
-    res.status(200).json({
-      _id: req._id,
-      isAdmin: req.user.role === 09 ? false : true,
-      isAuth: true,
-      name: req.user.name,
-      id: req.user.id,
-      department: req.user.department
-    });
+      else{
+          res.redirect('/auth/login')
+      }
+  })
 });
 
-//user_id를 찾아서(auth를 통해 user의 정보에 들어있다) db에있는 토큰값을 비워준다
-app.get("/logout", auth, (req, res) => {
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-      if (err) return res.json({ success: false, err });
-      res.clearCookie("x_auth");
-      return res.status(200).send({
-        success: true,
-      });
-    });
-});
+//main pages
+app.get('/', mainController)
 
-app.listen(port, () => console.log(`listening on port ${port}`));
+app.all('*', (req, res)=>{
+  res.render('404Page')
+})
