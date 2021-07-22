@@ -6,22 +6,33 @@
     <body>
         <!-- Navigation-->
         <%- include('layouts/navbar_white')-%>
-            <!-- Header-->
-            <header class="bg-success py-5">
-                <div class="container px-4 px-lg-5 my-5" style="padding-bottom: 406px;">
+            <!-- Header-->                       
+            <%if(loggedIn){%>
+            <header class="py-5" style="background-color: #4a6375;">
+                <div class="container px-1 px-lg-5 my-5" style="padding-bottom: 15px;">
                     <div class="text-center text-white">
-                        <h1 class="display-4 fw-bolder">KNU Metaverse</h1>
+                        <h1 class="display-3 fw-bolder">KNU Metaverse</h1>
                         <br>
                         <p class="lead fw-normal text-white-50 mb-0">
                             COVID-19로 변화된 대학 생활을 개선시켜주는<br>
                             Virtual Campus Environment
                         </p>
-
-                        <%if(loggedIn){%>
                         <div class="form-group" style="text-align: center;">
-                            <button type="submit" class="btn btn-success" onclick="location.href='/campus/'">start!</button>
+                            <button type="submit" style="padding: 30px; font-size: 30px; margin-top: 300px; background-color: #0a1f2e; color: white;" 
+                            class="btn" onclick="location.href='/campus/'">입장하기</button>
                         </div>
-                        <%}else{%>
+            <%}else{%>
+            <header class="py-5" style="background-color: #4a6375;">
+                <div class="container px-4 px-lg-5 my-5">
+                    <div class="text-center text-white">
+                        <h1 class="display-3 fw-bolder">KNU Metaverse</h1>
+                        <br>
+                        <p class="lead fw-normal text-white-50 mb-0">
+                            COVID-19로 변화된 대학 생활을 개선시켜주는<br>
+                            Virtual Campus Environment
+                        </p>
+                        <br>
+                        <img src="https://raw.githubusercontent.com/heej-ng/2021_KNU_SW_Hackathon/main/views/img/%EA%B2%BD%EB%B6%81%EB%8C%80%ED%95%99%EA%B5%90%EC%95%BC%EA%B2%BD.jpg" width="800px" height="480px">
                         <br>
                         <%}%>
                         
