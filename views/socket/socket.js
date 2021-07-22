@@ -1,7 +1,8 @@
 var socket = io();
 
 socket.on('user_id', function(data){
-    myId = data;
+    myId = data.socketId,
+    myName = data.userName;
 });
 socket.on('join_user', function(data){
     joinUser(data.id, data.color, data.x, data.y);
