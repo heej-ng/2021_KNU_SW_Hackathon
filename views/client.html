@@ -18,8 +18,15 @@
             display: block; 
             margin : 0 auto;
         }
+        *{
+             font-family: 'Jua', sans-serif;
+              font-weight: lighter;
+
+        }
     </style>
-    
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/roomObject.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/userObject.js"></script>
@@ -30,7 +37,7 @@
 <body>
    <div style = "text-align: center;">
     <font size = "8em" color = "red" font-weight = "bold">
-        <b>Smart Campus</b>
+        <b>KNU 메타버스</b>
     </font>
   </div>
     <h1 style = "text-align: center;">IT5</h1>
@@ -52,6 +59,7 @@
         var balls  = [];
         var ballMap = {};
         var myId;
+        var myName;
 
         document.addEventListener("keydown", keyDownHandler,false);
         document.addEventListener("keyup", keyUpHandler,false);
