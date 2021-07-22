@@ -12,12 +12,14 @@ app.use(express.json())
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
+
 app.use('/views/img/map.png', express.static(__dirname+ '/views/img/map.png'));
 app.use('/views/object/userObject.js', express.static(__dirname+ '/views/object/userObject.js'));
 app.use('/views/object/rooms.js', express.static(__dirname+ '/views/object/rooms.js'));
 app.use('/views/socket/render.js', express.static(__dirname+ '/views/socket/render.js'));
 app.use('/views/socket/socket.js', express.static(__dirname+ '/views/socket/socket.js'));
 app.use('/views/object/roomObject.js', express.static(__dirname+ '/views/object/roomObject.js'));
+app.use('/public/css/room.css', express.static(__dirname+ '/public/css/room.css'));
 
 const mongoose = require('mongoose');
 const dbAddress = "mongodb+srv://whghtjd320:jhs2430570@cluster0.ylrcp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -155,6 +157,9 @@ function endGame(socket){
     delete ballMap[socket.id];
 }
 
+var users = {};
+var onlineUsers = {};
+
 
 //on : 이벤트 받기(이벤트명,함수)
 //emit : 이벤트 보내기(이벤트명,메시지)
@@ -198,6 +203,29 @@ io.on('connection', function(socket) {
         roomId = data.roomId;
         ballId = data.ballId;
         console.log(ballId + '님이 ' + roomId + '로 입장하였습니다.');
+
+    });
+
+    socket.on('get_info', function(data) {
+        socket.emit('room_information', {
+            roomId: roomId,
+            socketId: socket.id,
+            user: ballId
+        })
+    });
+
+    socket.on('join', function(data) {
+        socket.join(data);
     })
+
+    socket.on("send message", function (data) {
+        console.log(data.msg);
+        io.sockets.in(data.roomId).emit('new message', {
+            roomId: data.roomId,
+            socketId: data.socketId,
+            user: data.user,
+            msg: data.msg
+        });
+    });
 
 })

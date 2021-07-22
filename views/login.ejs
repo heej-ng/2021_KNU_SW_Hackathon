@@ -2,23 +2,24 @@
 <html lang="en">
     <%-include('layouts/header')-%>
     <body>
+      <div>
         <!-- Navigation-->
         <%-include('layouts/navbar_white')-%>
         
         <!-- Header-->
-        <header class="bg-success py-5">
-            <div class="container px-4 px-lg-5 my-5">
+        <header class="bg-success py-4">
+            <div class="my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">로그인</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">환영합니다~</p>
+                    <h1 class="display-4 fw-bolder">SIGN IN</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Thank you for comming back!</p>
                 </div>
             </div>
         </header>
 
         <!-- Section-->
         <div class="container">
-            <div class="row">
-              <div class="col-lg-6 col-md-8 mx-auto my-5">        
+            <div class="row" style="margin-top: 90px; margin-bottom: 90px;">       
+              <div class="col-lg-6 col-md-8 mx-auto my-5">
                 <!-- for browser to know tha tthe form contains mutli media. will encripy multie media and send to server -->
                 <form action="/users/login" method="post">
                   <div class="control-group">
@@ -27,6 +28,7 @@
                       <input type="text" class="form-control" placeholder="아이디를 입력하세요" id="name" name="name">              
                     </div>
                   </div>
+                  <br>
                   <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                       <label>비밀번호</label>
@@ -36,7 +38,7 @@
         
                   <br/>
                   <div class="form-group mb-5" style="text-align: right;">
-                    <button type="submit" class="btn btn-success">로그인</button>
+                    <button type="submit" class="btn btn-danger">로그인</button>
                   </div>
                 </form>
               </div>
@@ -46,5 +48,6 @@
         <!-- Footer-->
         <%-include('layouts/footer')-%>
         <%- include('layouts/script')-%>
+      </div>
     </body>
 </html>

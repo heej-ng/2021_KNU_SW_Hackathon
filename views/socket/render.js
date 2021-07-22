@@ -6,7 +6,7 @@ function roomDetection() {
             roomId = rooms[i].getId()                   
             alert(roomId + '호로 입장합니다.');
             socket.emit('enterRoom', {roomId: roomId, ballId: myId});
-            location.href = "./campus/room/" + roomId;//
+            location.href = "./room/" + roomId;//
             break;
         }
     }

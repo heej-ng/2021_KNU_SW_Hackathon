@@ -13,23 +13,61 @@
             padding : 0; 
             margin: 0;
         }
-        canvas {
-            background-color: gray; 
-            display: block; 
-            margin : 0 auto;
-            width: 1024px;
-            height: 768px;
-        }
     </style>
     
     <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/public/css/room.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/roomObject.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/userObject.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/rooms.js"></script>
     <script language="javascript" type="text/javascript" src="/views/socket/render.js"></script>
     <script language="javascript" type="text/javascript" src="/views/socket/socket.js"></script>
     <script>
+        var roomId = 0;
+        var socket = io();
+        var socketId = socket.id;
         
+        socket.emit('get_info', 1);
+        
+        socket.on('room_information', function(data){
+            roomId = data.roomId
+            socketId = data.socketId
+            socket.emit('join', roomId);
+        }) 
+        
+        $(function () {
+            var $chatForm = $('#chatForm');
+            var $chatLog = $('#chatLog');
+
+            $chatForm.submit(function (e) {
+                e.preventDefault();
+                let msg = $("#message");
+                if (msg.val() === "") {
+                    return false;
+                } else {
+                    let data = {
+                        roomId: roomId,
+                        socketId: socketId,
+                        user: "이도윤",
+                        msg: msg.val()
+                    };
+                    socket.emit("send message", data);
+                    msg.val("");
+                    msg.focus();
+                }
+            });
+            socket.on('new message', function (data) {
+                console.log(data);
+                if (data.socketId === socketId) {
+                    $chatLog.append(`<div class="myMsg msgEl"><span class="msg">${data.msg}</span></div>`)
+                } else {
+                    $chatLog.append(`<div class="anotherMsg msgEl"><span class="anotherName">${data.name}</span><span class="msg">${data.msg}</span></div>`)
+                }
+                $chatLog.scrollTop($chatLog[0].scrollHeight - $chatLog[0].clientHeight);
+            });
+        })
+
     </script>
 </head>
 <body>
@@ -37,12 +75,21 @@
     <font size = "8em" color = "red" font-weight = "bold">
         <b>Smart Campus</b>
     </font>
-  </div>
+    </div>
     <h1 style = "text-align: center;">
-        IT5-
-        <span id="roomNumber">roomid</span>
+        IT5-roomid
     </h1>
-    <form id="canvas"></form>>
+
+    <div id="chatWrap">
+        <div id="chatHeader">Everyone</div>
+        <div id="chatLog">
+
+        </div>
+        <form id="chatForm">
+            <input type="text" autocomplete="off" size="30" id="message" placeholder="메시지를 입력하세요">
+            <input type="submit" value="보내기">
+        </form>
+    </div>
 
 
 </body>

@@ -13,7 +13,6 @@
 // var room351 = new Room(351, );
 // var room354 = new Room(354, );
 // var room355 = new Room(355, );
-var rooms = [];
 
 window.onload = function() {
     let room301 = new Room(301, 469, 780, 261, 88);

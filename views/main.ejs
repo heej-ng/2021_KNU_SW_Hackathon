@@ -8,14 +8,23 @@
         <%- include('layouts/navbar_white')-%>
             <!-- Header-->
             <header class="bg-success py-5">
-                <div class="container px-4 px-lg-5 my-5">
+                <div class="container px-4 px-lg-5 my-5" style="padding-bottom: 406px;">
                     <div class="text-center text-white">
-                        <h1 class="display-4 fw-bolder">KNU 메타버스</h1>
+                        <h1 class="display-4 fw-bolder">KNU Metaverse</h1>
                         <br>
                         <p class="lead fw-normal text-white-50 mb-0">
-                            코로나로 인해 단절된 학교 생활과 교우 관계를<br>
-                            개선해보고자 만듦!
+                            COVID-19로 변화된 대학 생활을 개선시켜주는<br>
+                            Virtual Campus Environment
                         </p>
+
+                        <%if(loggedIn){%>
+                        <div class="form-group" style="text-align: center;">
+                            <button type="submit" class="btn btn-success" onclick="location.href='/campus/'">start!</button>
+                        </div>
+                        <%}else{%>
+                        <br>
+                        <%}%>
+                        
                     </div>
                 </div>
             </header>
