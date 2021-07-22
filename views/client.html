@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <title>Smart Campus</title>
+    <title>KNU-metaverse</title>
     <style>
         * {
             padding : 0; 
@@ -18,8 +18,15 @@
             display: block; 
             margin : 0 auto;
         }
+        *{
+             font-family: 'Jua', sans-serif;
+              font-weight: lighter;
+
+        }
     </style>
-    
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/roomObject.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/userObject.js"></script>
@@ -28,16 +35,17 @@
     <script language="javascript" type="text/javascript" src="/views/socket/socket.js"></script>
 </head>
 <body>
-   <div style = "text-align: center;">
-    <font size = "8em" color = "red" font-weight = "bold">
-        <b>Smart Campus</b>
+   <div style = "text-align: center; background-color: #4a6375;">
+    <font size = "8em" color = "white" font-weight = "bold">
+        <b>KNU 메타버스</b>
     </font>
   </div>
-    <h1 style = "text-align: center;">IT5</h1>
+    <h1 style = "text-align: center; background-color: #4a6375;">IT5</h1>
     <canvas id = "myCanvas" width ="1024" height = "768"></canvas>
   
     <script>
         var map = '/views/img/map.png';
+        var first_floor='/views/img/first_floor.png';
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
         var radius = 20
@@ -93,6 +101,14 @@
             evDetection();
             renderPlayer();
         }
+
+        function renderMap(){
+             var img = new Image;
+             img.src = map;
+             ctx.beginPath();
+             ctx.drawImage(img,0,0, 1024, 768);
+             ctx.closePath();    
+            }
         
         setInterval(update, 10);
         
