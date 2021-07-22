@@ -64,6 +64,8 @@ app.use("*", (req, res, next)=>{
   next()
 })
 
+var user_name = "";
+
 // 로그인, 회원가입
 app.get('/auth/logout', redirectIfNotAuthMiddleware, logoutController)
 app.get('/auth/register', redirectIfAuthenticatedMiddleware, newUserController)
@@ -72,6 +74,7 @@ app.post('/users/register', redirectIfAuthenticatedMiddleware, storeUserControll
 app.post("/users/login", (req, res) => {
   const {name, password} = req.body
   console.log(req.body)
+  user_name = req.body.name;
   User.findOne({name:name}, (error, user) =>{
       if(user){
           bcrypt.compare(password, user.password, (error, same)=>{
@@ -127,6 +130,7 @@ class PlayerBall{
         this.socket = socket;
         this.x = startX;
         this.y = startY;
+        this.name = user_name;
         this.color = getPlayerColor();
     }
 
@@ -173,7 +177,10 @@ io.on('connection', function(socket) {
     });
 
     let newBall = joinGame(socket);
-    socket.emit('user_id', socket.id);
+    socket.emit('user_id', {
+        socketId: socket.id,
+        userName: user_name
+    });
 
     for (var i = 0 ; i < balls.length; i++){
         let ball = balls[i];
@@ -201,8 +208,8 @@ io.on('connection', function(socket) {
   
     socket.on('enterRoom', function(data){
         roomId = data.roomId;
-        ballId = data.ballId;
-        console.log(ballId + '님이 ' + roomId + '로 입장하였습니다.');
+        userName = data.userName;
+        console.log(userName + '님이 ' + roomId + '로 입장하였습니다.');
 
     });
 
@@ -210,7 +217,7 @@ io.on('connection', function(socket) {
         socket.emit('room_information', {
             roomId: roomId,
             socketId: socket.id,
-            user: ballId
+            userName: userName
         })
     });
 
@@ -221,9 +228,8 @@ io.on('connection', function(socket) {
     socket.on("send message", function (data) {
         console.log(data.msg);
         io.sockets.in(data.roomId).emit('new message', {
-            roomId: data.roomId,
             socketId: data.socketId,
-            user: data.user,
+            userName: data.userName,
             msg: data.msg
         });
     });
