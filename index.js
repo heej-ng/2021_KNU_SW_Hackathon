@@ -12,8 +12,8 @@ app.use(express.json())
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
-
 app.use('/views/img/map.png', express.static(__dirname+ '/views/img/map.png'));
+app.use('/views/img/wallpaper.jpg', express.static(__dirname+ '/views/img/wallpaper.jpg'));
 app.use('/views/object/userObject.js', express.static(__dirname+ '/views/object/userObject.js'));
 app.use('/views/object/rooms.js', express.static(__dirname+ '/views/object/rooms.js'));
 app.use('/views/socket/render.js', express.static(__dirname+ '/views/socket/render.js'));
@@ -106,6 +106,14 @@ app.get('/campus/room/:id', (req, res) => {
     res.sendFile(__dirname + '/views/room.html');
     id = req.params.id;
     console.log(id);
+});
+
+app.get('/office',(req,res)=>{
+    res.sendFile(__dirname+'/views/office.html');
+})
+
+app.get('/campus/client_floor1', (req, res) => {
+    res.sendFile(__dirname + '/views/client_floor1.html');
 });
 
 app.all('*', (req, res)=>{
@@ -206,6 +214,8 @@ io.on('connection', function(socket) {
             })
     });
   
+    var userName;
+
     socket.on('enterRoom', function(data){
         roomId = data.roomId;
         userName = data.userName;
