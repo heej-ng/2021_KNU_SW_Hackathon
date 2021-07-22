@@ -1,7 +1,6 @@
 # 2021 KNU SW Hackathon
 
 ## KNU 메타버스
-<br>
 
 ### 경북대학교 확장 가상 캠퍼스 서비스 개발
 
@@ -36,7 +35,7 @@
 <br>
 
 ### :mag: 서비스 기능
->- 회원가입 · 로그인 · 로그아웃 기능
+>- 회원가입 · 로그인 · 로그아웃 기능<br>
 >> 이름, 학번, 학과, 비밀번호, 캐릭터, 전화번호<br>
 >- 강의실 입장 기능 (강의실 입장 후)
 >> 출석 기능<br>
@@ -51,16 +50,14 @@
 
 <br>
 
-### 개발 스택
-![nodejs](https://user-images.githubusercontent.com/80497254/126691805-c1dd06c2-0629-48ac-8274-6e9a3d06ae34.png)
+### :wrench: 개발 스택
 
-![express](https://user-images.githubusercontent.com/80497254/126691839-3997f032-3519-451f-92f0-176a2ee1805c.png)
-
-![소켓](https://user-images.githubusercontent.com/80497254/126691859-758538fc-a8bc-4b74-8009-8eb319475060.png)
-
-![jquery](https://user-images.githubusercontent.com/80497254/126691900-1876c4d6-e501-4b72-b33f-ca21980c6887.png)
-
-![mongoDB](https://user-images.githubusercontent.com/80497254/126691915-f2bce740-000c-4419-a5f6-d72f93761874.png)
+> <img src="https://user-images.githubusercontent.com/80497254/126691805-c1dd06c2-0629-48ac-8274-6e9a3d06ae34.png" width="200"> 
+> <img src="https://user-images.githubusercontent.com/80497254/126691915-f2bce740-000c-4419-a5f6-d72f93761874.png" width="200"> 
+> <img src="https://user-images.githubusercontent.com/80497254/126691859-758538fc-a8bc-4b74-8009-8eb319475060.png" width="200"> <br>
+> 
+> <img src="https://user-images.githubusercontent.com/80497254/126691900-1876c4d6-e501-4b72-b33f-ca21980c6887.png" width="200"> 
+> <img src="https://user-images.githubusercontent.com/80497254/126691839-3997f032-3519-451f-92f0-176a2ee1805c.png" width="200"> <br>
 
 <br>
 
@@ -75,13 +72,11 @@
 
 <br>
 
-### 추후 보충·추가할 점
+### :earth_asia: 추후 보충·추가할 점
 >- 교수·학생 구분 회원가입
 >> 교수 : 출석한 학생 한번에
 
 <br>
-
-
 
 ### 🎞 시연영상
 
