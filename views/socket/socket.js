@@ -5,7 +5,7 @@ socket.on('user_id', function(data){
     myName = data.userName;
 });
 socket.on('join_user', function(data){
-    joinUser(data.id, data.color, data.x, data.y);
+    joinUser(data.id, data.color, data.x, data.y, data.name);
 })
 socket.on('leave_user', function(data){
     leaveUser(data);
@@ -14,11 +14,12 @@ socket.on('update_state', function(data){
     updateState(data.id, data.x, data.y);
 }) 
 
-function joinUser(id,color,x,y){
+function joinUser(id, color, x, y, name){
     let ball = new PlayerBall(id);
     ball.color = color;
     ball.x = x;
     ball.y = y;
+    ball.name = name;
 
     balls.push(ball);
     ballMap[id] = ball;

@@ -9,7 +9,7 @@ function roomDetection() {
                 roomId: roomId, 
                 userName: myName
             });
-            location.href = "./room/" + roomId;//
+            location.href = "campus/room/" + roomId;//
             break;
         }
     }
@@ -40,7 +40,7 @@ function renderPlayer() {
             
             ctx.beginPath();
             ctx.font = '15px Arial';
-            ctx.fillText(`player ${i}`,ball.x-radius-7, ball.y-radius);
+            ctx.fillText(`${ball.name}`,ball.x-radius-3, ball.y-radius-4);
             ctx.closePath();
         }
 

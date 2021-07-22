@@ -12,7 +12,9 @@ app.use(express.json())
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
+app.use('/views/img/office_map.png', express.static(__dirname+ '/views/img/office_map.png'));
 app.use('/views/img/map.png', express.static(__dirname+ '/views/img/map.png'));
+app.use('/views/img/first_floor.png', express.static(__dirname+ '/views/img/first_floor.png'));
 app.use('/views/img/wallpaper.jpg', express.static(__dirname+ '/views/img/wallpaper.jpg'));
 app.use('/views/object/userObject.js', express.static(__dirname+ '/views/object/userObject.js'));
 app.use('/views/object/rooms.js', express.static(__dirname+ '/views/object/rooms.js'));
@@ -197,6 +199,7 @@ io.on('connection', function(socket) {
             x: ball.x,
             y: ball.y,
             color: ball.color,
+            name: ball.name
         });
     }
     socket.broadcast.emit('join_user',{
@@ -204,6 +207,7 @@ io.on('connection', function(socket) {
         x: newBall.x,
         y: newBall.y,
         color: newBall.color,
+        name: newBall.name
     });
 
     socket.on('send_location', function(data) {
