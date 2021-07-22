@@ -42,6 +42,11 @@
 *::after {
   box-sizing: border-box;
 }
+*{
+  font-family: 'Jua', sans-serif;
+  font-weight: lighter;
+
+}
 
 @media (prefers-reduced-motion: no-preference) {
   :root {
