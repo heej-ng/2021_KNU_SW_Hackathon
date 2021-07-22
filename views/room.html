@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <title>Smart Campus</title>
+
+    <title>KNU-metaverse</title>
     <style>
         * {
             padding : 0; 
@@ -17,22 +18,31 @@
     
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="/public/css/room.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/roomObject.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/userObject.js"></script>
     <script language="javascript" type="text/javascript" src="/views/object/rooms.js"></script>
     <script language="javascript" type="text/javascript" src="/views/socket/render.js"></script>
     <script language="javascript" type="text/javascript" src="/views/socket/socket.js"></script>
+    
     <script>
         var roomId = 0;
         var socket = io();
         var socketId = socket.id;
+        var myName;
         
         socket.emit('get_info', 1);
         
         socket.on('room_information', function(data){
             roomId = data.roomId
             socketId = data.socketId
+            myName = data.userName
+            document.getElementById("roomNumber").innerHTML=roomId;   
             socket.emit('join', roomId);
         }) 
         
@@ -49,7 +59,7 @@
                     let data = {
                         roomId: roomId,
                         socketId: socketId,
-                        user: "이도윤",
+                        userName: myName,
                         msg: msg.val()
                     };
                     socket.emit("send message", data);
@@ -59,10 +69,10 @@
             });
             socket.on('new message', function (data) {
                 console.log(data);
-                if (data.socketId === socketId) {
+                if (data.userName === myName) {
                     $chatLog.append(`<div class="myMsg msgEl"><span class="msg">${data.msg}</span></div>`)
                 } else {
-                    $chatLog.append(`<div class="anotherMsg msgEl"><span class="anotherName">${data.name}</span><span class="msg">${data.msg}</span></div>`)
+                    $chatLog.append(`<div class="anotherMsg msgEl"><span class="anotherName">${data.userName}</span><span class="msg">${data.msg}</span></div>`)
                 }
                 $chatLog.scrollTop($chatLog[0].scrollHeight - $chatLog[0].clientHeight);
             });
@@ -71,17 +81,21 @@
     </script>
 </head>
 <body>
-   <div style = "text-align: center;">
+   <div id = "title" style = "text-align: center;">
     <font size = "8em" color = "red" font-weight = "bold">
-        <b>Smart Campus</b>
+        <b>KNU 메타버스</b>
     </font>
-    </div>
-    <h1 style = "text-align: center;">
-        IT5-roomid
+    <h1>
+        IT5-
+        <span id = "roomNumber"></span>
     </h1>
+    <h3 style ="color:#DEB887; font-size:20px">출석을 원하시면 하단의 스위치를 누르십시요</h3><br>
+</div>
+    
+    
 
-    <div id="chatWrap">
-        <div id="chatHeader">Everyone</div>
+<div id="chatWrap">
+        <div id="chatHeader">채팅창</div>
         <div id="chatLog">
 
         </div>
@@ -89,7 +103,22 @@
             <input type="text" autocomplete="off" size="30" id="message" placeholder="메시지를 입력하세요">
             <input type="submit" value="보내기">
         </form>
-    </div>
+</div>
+
+<div id = study>
+    <button class="button" type="button" id="webex_link" onclick="location.href='https://doyun7433.my.webex.com/meet/doyun7433';">
+        온라인 수업 들으러 가기
+        </button>
+    
+</div>
+<p class = "off">OFF</p><p class ="on" style="display:none;">ON</p>
+<script>
+      var check = $("input[type='checkbox']");
+      check.click(function(){
+	  $("p").toggle();
+});
+</script>
+
 
 
 </body>
