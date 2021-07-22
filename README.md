@@ -52,6 +52,15 @@
 <br>
 
 ### 개발 스택
+![nodejs](https://user-images.githubusercontent.com/80497254/126691805-c1dd06c2-0629-48ac-8274-6e9a3d06ae34.png)
+
+![express](https://user-images.githubusercontent.com/80497254/126691839-3997f032-3519-451f-92f0-176a2ee1805c.png)
+
+![소켓](https://user-images.githubusercontent.com/80497254/126691859-758538fc-a8bc-4b74-8009-8eb319475060.png)
+
+![jquery](https://user-images.githubusercontent.com/80497254/126691900-1876c4d6-e501-4b72-b33f-ca21980c6887.png)
+
+![mongoDB](https://user-images.githubusercontent.com/80497254/126691915-f2bce740-000c-4419-a5f6-d72f93761874.png)
 
 <br>
 
