@@ -5,7 +5,10 @@ function roomDetection() {
         if ((ball.getX()+450 < rooms[i].getX() + rooms[i].getWidth()) && ball.getY() == rooms[i].getY()) {
             roomId = rooms[i].getId()                   
             alert(roomId + '호로 입장합니다.');
-            socket.emit('enterRoom', {roomId: roomId, ballId: myId});
+            socket.emit('enterRoom', {
+                roomId: roomId, 
+                userName: myName
+            });
             location.href = "./room/" + roomId;//
             break;
         }
