@@ -15,14 +15,16 @@
 <br>
 
 ### :computer: 주제 선정 배경
-> <img width="500" src="https://insight-prd-data.s3.ap-northeast-2.amazonaws.com/wp-content/uploads/2020/07/003.png"><br>
->- 대학생들은 코로나19로 인한 대학 생활 중 <br>
-> 학업 야외 활동과 선후배/동기간 교류를 못하게 된 점이 가장 아쉽다고 응답했다.
+> <img src="https://insight-prd-data.s3.ap-northeast-2.amazonaws.com/wp-content/uploads/2020/07/003.png"><br>
+>- **대학생들은 코로나19로 인한 대학 생활 중 <br>
+> 학업 야외 활동과 선후배/동기간 교류를 못하게 된 점이 가장 아쉽다고 응답했다.**
 >
-><img width="600" src="https://user-images.githubusercontent.com/62900140/126696409-1da06baf-8439-45c2-96f4-68cef2802f29.png"><br>
-> [기사](http://www.civicnews.com/news/articleView.html?idxno=31752) <br>
->- 이러한 UNTACT 상황 속에서 건국대와 숭실대 등은 <br>
-> "메타버스" 기술을 이용하여 비대면 축제를 개최했고 매우 긍정적인 반응이 나왔다.
+><img src="https://user-images.githubusercontent.com/62900140/126696409-1da06baf-8439-45c2-96f4-68cef2802f29.png">
+>
+> [기사원본](http://www.civicnews.com/news/articleView.html?idxno=31752) 
+> <br><br>
+>-  이러한 UNTACT 상황 속에서 건국대와 숭실대 등은 <br>
+>  "메타버스" 기술을 이용하여 비대면 축제를 개최했고 매우 긍정적인 반응이 나왔다.
 
 >- 우리는 이 "메타버스" 아이디어를 단순히 축제에 국한시키지 않고,<br>
 > **수업 시간/공강 시간/학업 야외 활동 등 모든 대학 생활을 선후배/동기들과 즐길 수 있는** KNU 메타버스를 구현하고자 한다.
