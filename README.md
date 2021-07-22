@@ -11,7 +11,7 @@
 >- 경북대학교 컴퓨터학부 20학번 [박희중](https://github.com/heej-ng)
 >- 경북대학교 컴퓨터학부 19학번 [조호성](https://github.com/Johoseong)
 >- 경북대학교 컴퓨터학부 19학번 [허현진](https://github.com/heohyeonjin)
->- 경북대학교 컴퓨터학부 10학번 [이도윤](https://github.com/idoburnish)
+>- 경북대학교 컴퓨터학부 19학번 [이도윤](https://github.com/idoburnish)
 
 <br>
 
