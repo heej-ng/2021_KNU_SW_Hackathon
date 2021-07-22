@@ -9,18 +9,9 @@ function roomDetection() {
                 roomId: roomId, 
                 userName: myName
             });
-            console.log(myName);
             location.href = "./room/" + roomId;//
             break;
         }
-    }
-}
-
-function evDetection() {
-    let ball = ballMap[myId];
-
-    if ((ball.getX()+440 > 1120) && (ball.getY() + 80) > 553) {
-        alert('엘리베이터를 탑니다.');
     }
 }
 
@@ -49,7 +40,7 @@ function renderPlayer() {
             
             ctx.beginPath();
             ctx.font = '15px Arial';
-            ctx.fillText(`${ball.name}`,ball.x-radius-7, ball.y-radius);
+            ctx.fillText(`player ${i}`,ball.x-radius-7, ball.y-radius);
             ctx.closePath();
         }
 
@@ -69,11 +60,20 @@ function renderPlayer() {
         }
         sendData();
 }
+var selectFloor;
+let cnt = 0;
+function evDetection() {
+    let ball = ballMap[myId];
+    if ((ball.getX()+440 > 1120) && ((ball.getY() + 80) > 553) && cnt<=0) {
+        cnt++;
+        selectFloor = prompt('몇 층으로 갈까요?');
 
-function renderMap(){
-    var img = new Image;
-    img.src = map;
-    ctx.beginPath();
-    ctx.drawImage(img,0,0, 1024, 768);
-    ctx.closePath();
+        if (selectFloor === "1층") {
+             window.location.href = '/campus/client_floor1';
+            
+         }
+         else {
+             location.href = "/campus";
+         }
+    }
 }
