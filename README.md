@@ -21,9 +21,12 @@
 - 대학생들은 코로나19로 인한 대학 생활 중 <br>
  학업 야외 활동과 선후배/동기간 교류를 못하게 된 점이 가장 아쉽다고 응답했다.
 
+ [기사1](https://www.sktinsight.com/123940)
+
 <img src="https://user-images.githubusercontent.com/62900140/126696409-1da06baf-8439-45c2-96f4-68cef2802f29.png">
 
- [기사원본](http://www.civicnews.com/news/articleView.html?idxno=31752) 
+ [기사2](http://www.civicnews.com/news/articleView.html?idxno=31752) 
+ 
  <br><br>
 -  이러한 UNTACT 상황 속에서 건국대와 숭실대 등은 <br>
   "메타버스" 기술을 이용하여 비대면 축제를 개최했고 매우 긍정적인 반응이 나왔다.
