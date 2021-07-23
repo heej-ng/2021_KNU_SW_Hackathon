@@ -139,4 +139,4 @@ npm start
 
 ### 🎞 시연영상
 
-<br>
+https://youtu.be/_HNDtbxd0VU
