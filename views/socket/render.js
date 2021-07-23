@@ -3,13 +3,20 @@ function roomDetection() {
     var roomId;
     for (var i=0; i<rooms.length; i++) {
         if ((ball.getX()+450 < rooms[i].getX() + rooms[i].getWidth()) && ball.getY() == rooms[i].getY()) {
-            roomId = rooms[i].getId()                   
+            roomId = rooms[i].getId()
+            
+            if(roomId==317){
+                alert('과사로 입장합니다.');
+                location.href = '/office';
+            }
+            else{
             alert(roomId + '호로 입장합니다.');
             socket.emit('enterRoom', {
                 roomId: roomId, 
                 userName: myName
             });
-            location.href = "campus/room/" + roomId;//
+            location.href = "./room/" + roomId;
+        }
             break;
         }
     }

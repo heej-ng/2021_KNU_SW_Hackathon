@@ -174,7 +174,8 @@ function endGame(socket){
 var users = {};
 var onlineUsers = {};
 
-
+var room = 0;
+var flag = 0;
 //on : 이벤트 받기(이벤트명,함수)
 //emit : 이벤트 보내기(이벤트명,메시지)
 io.on('connection', function(socket) {
@@ -186,7 +187,11 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('leave_user', socket.id);
     });
 
-    let newBall = joinGame(socket);
+    let newBall = 0;
+    if (flag <= 0) {
+        newBall = joinGame(socket);
+    } 
+
     socket.emit('user_id', {
         socketId: socket.id,
         userName: user_name
@@ -218,11 +223,12 @@ io.on('connection', function(socket) {
             })
     });
   
-    var userName;
+    //var userName;
 
     socket.on('enterRoom', function(data){
         roomId = data.roomId;
         userName = data.userName;
+        flag = data.flag;
         console.log(userName + '님이 ' + roomId + '로 입장하였습니다.');
 
     });
@@ -233,6 +239,7 @@ io.on('connection', function(socket) {
             socketId: socket.id,
             userName: userName
         })
+        console.log("이름" + userName);
     });
 
     socket.on('join', function(data) {
@@ -240,12 +247,16 @@ io.on('connection', function(socket) {
     })
 
     socket.on("send message", function (data) {
-        console.log(data.msg);
         io.sockets.in(data.roomId).emit('new message', {
             socketId: data.socketId,
             userName: data.userName,
             msg: data.msg
         });
     });
+
+    socket.on('goBack', function(data) {
+        flag = 0;
+        console.log(flag)
+    })
 
 })

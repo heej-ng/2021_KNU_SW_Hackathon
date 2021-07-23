@@ -86,7 +86,12 @@
     left: 15px;
     top: 320px;
 }
-
+#go_office2{
+    font-size:20px; padding: 10px 10px;
+    position: absolute;
+    left: 15px;
+    top: 320px;
+}
 .switch {
 position: absolute;
 left:10px;

@@ -70,14 +70,19 @@
             });
             socket.on('new message', function (data) {
                 console.log(data);
-                if (data.socketId === socketId) {
+                if (data.userName === myName) {
                     $chatLog.append(`<div class="myMsg msgEl"><span class="msg">${data.msg}</span></div>`)
                 } else {
                     $chatLog.append(`<div class="anotherMsg msgEl"><span class="anotherName">${data.userName}</span><span class="msg">${data.msg}</span></div>`)
                 }
                 $chatLog.scrollTop($chatLog[0].scrollHeight - $chatLog[0].clientHeight);
             });
-        })
+        });
+
+        function back() {
+            socket.emit('goBack', 1);
+            location.href='/campus'
+        }
 
     </script>
    
@@ -107,12 +112,16 @@
         
         <span id = "roomNumber"></span>
         <button class="button" type="button" id="webex_link" onclick="location.href='https://doyun7433.my.webex.com/meet/doyun7433';" 
-        style="width: 300px; background-color: #97b3c9; border-radius: 1ch; color: white; margin-left: 20px; margin-top: 100px;">
+        style="width: 300px; background-color: #97b3c9; border-radius: 1ch; color: white; margin-left: 20px; margin-top: 70px;">
             온라인 수업 들으러 가기
             </button>
         <button class="button" type="button" id="go_office" onclick="location.href='/office'"
-        style="width: 300px; background-color: #97b3c9; border-radius: 1ch; color: white; margin-left: 20px; margin-top: 100px;">
+        style="width: 300px; background-color: #97b3c9; border-radius: 1ch; color: white; margin-left: 20px; margin-top: 60px;">
             과사 입장하기
+        </button>
+        <button class="button" type="button" id="go_office2" onclick=back()
+        style="width: 300px; background-color: #97b3c9; border-radius: 1ch; color: white; margin-left: 20px; margin-top: 120px;">
+            뒤로가기
         </button>
     </div>
 
